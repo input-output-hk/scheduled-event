@@ -1,0 +1,23 @@
+name: Haskell CI
+
+on:
+  schedule:
+    - cron:  '*/5  * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+    - name: Check event
+      run: |
+        echo "${{ toJSON(github.event) }}"
+
+    - name: Check event name
+      run: |
+        echo "${{ github.event_name }}"
