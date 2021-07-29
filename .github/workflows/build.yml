@@ -1,8 +1,19 @@
 name: Haskell CI
 
 on:
+  push:
   schedule:
     - cron:  '*/5  * * * *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason'
+        required: false
+        default: manual
+      tests:
+        description: 'Tests'
+        required: false
+        default: some
 
 jobs:
   build:
@@ -22,3 +33,12 @@ jobs:
       run: |
         echo "${{ github.event_name }}"
 
+    - name: Environment
+      run: |
+        env | cut -d = -f 1
+
+    - name: Environment
+      run: |
+        if [ "${{github.event.inputs.tests}}" == "all" ]; then
+          echo "Run all tests"
+        fi
